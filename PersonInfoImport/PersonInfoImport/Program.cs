@@ -11,6 +11,14 @@ namespace PersonInfoImport
     {
         static void Main(string[] args)
         {
+            if (args.Length > 0)
+            {
+                foreach(string fileName in args)
+                {
+                    PersonHelper.ParseFiles(fileName);
+                }
+                ScreenHelper.ShowOutputScreen(PersonHelper.personList.Count);
+            }
             RestAPIHelper.StartRestAPIHost();
             ScreenHelper.ReadMainScreen();
         }

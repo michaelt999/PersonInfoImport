@@ -170,9 +170,9 @@ namespace PersonInfoImport.Helper
             Console.WriteLine("");
             Console.Write(
 @"Import Data: 3 options below. 
-1. Run a command line: PersonInfoImport.exe [FileName(s)] where the FileNames are seperated by a comma. 
+1. Run a command Prompt as an Administrator and enter: PersonInfoImport.exe file1.txt file2.txt file3.txt. 
 2. Use Rest API client to post a record using url: http://localhost:8080/records.
-3. Enter the fileName(s) here, or enter Test to import test data, or enter C to cancel: ");
+3. Enter the fileName(s) seperated by a comma here, or enter Test to import test data, or enter C to cancel: ");
         }
 
         public static void ReadImportScreen()
@@ -206,7 +206,7 @@ namespace PersonInfoImport.Helper
             }
         }
 
-        private static void ShowOutputScreen(int totalAdded)
+        public static void ShowOutputScreen(int totalAdded)
         {
             Console.WriteLine("");
             Console.WriteLine("Import Result: " + totalAdded.ToString() + " records have been imported successfully.");
