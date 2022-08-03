@@ -1,0 +1,8 @@
+D:\Projects\GitHub\Source\Repos\PersonInfoImport\PersonInfoImport\PersonInfoImport\bin\Debug\PersonInfoImport.exe.config
+D:\Projects\GitHub\Source\Repos\PersonInfoImport\PersonInfoImport\PersonInfoImport\bin\Debug\PersonInfoImport.exe
+D:\Projects\GitHub\Source\Repos\PersonInfoImport\PersonInfoImport\PersonInfoImport\bin\Debug\PersonInfoImport.pdb
+D:\Projects\GitHub\Source\Repos\PersonInfoImport\PersonInfoImport\PersonInfoImport\obj\Debug\PersonInfoImport.csproj.AssemblyReference.cache
+D:\Projects\GitHub\Source\Repos\PersonInfoImport\PersonInfoImport\PersonInfoImport\obj\Debug\PersonInfoImport.csproj.SuggestedBindingRedirects.cache
+D:\Projects\GitHub\Source\Repos\PersonInfoImport\PersonInfoImport\PersonInfoImport\obj\Debug\PersonInfoImport.csproj.CoreCompileInputs.cache
+D:\Projects\GitHub\Source\Repos\PersonInfoImport\PersonInfoImport\PersonInfoImport\obj\Debug\PersonInfoImport.exe
+D:\Projects\GitHub\Source\Repos\PersonInfoImport\PersonInfoImport\PersonInfoImport\obj\Debug\PersonInfoImport.pdb

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PersonInfoImport.Helper;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,6 +11,8 @@ namespace PersonInfoImport
     {
         static void Main(string[] args)
         {
+            RestAPIHelper.StartRestAPIHost();
+            ScreenHelper.ReadMainScreen();
         }
     }
 }

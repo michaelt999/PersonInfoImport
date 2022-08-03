@@ -1,0 +1,7 @@
+﻿Lehmann, Dana, danal@test.com, orange, 5/3/1982
+Harrison, Vanessa, vanessah@test.com, pink, 8/1/1991
+Cordova, Maria, mariac@test.com, violet, 7/22/1978
+
+
+
+ 
