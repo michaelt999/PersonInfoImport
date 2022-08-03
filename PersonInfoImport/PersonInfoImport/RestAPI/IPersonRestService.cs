@@ -13,12 +13,13 @@ namespace PersonInfoImport.RestAPI
     public interface IPersonRestService
     {
         [OperationContract]
-        [WebInvoke(Method = "Post",
-                ResponseFormat = WebMessageFormat.Json,
+        [WebInvoke(Method = "POST",
+                ResponseFormat = WebMessageFormat.Json, 
+            RequestFormat = WebMessageFormat.Json,
                 BodyStyle = WebMessageBodyStyle.Wrapped,
                 UriTemplate = "records")]
         [return: MessageParameter(Name = "Data")]
-        string PostPerson(string personData);
+        string PostPerson(string record);
 
         [OperationContract]
         [WebInvoke(Method = "GET",

@@ -1,4 +1,5 @@
-﻿using PersonInfoImport.Model;
+﻿using Newtonsoft.Json;
+using PersonInfoImport.Model;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -18,7 +19,7 @@ namespace PersonInfoImport.Helper
     {
         public static List<Person> personList = new List<Person>();
 
-        public static List<char> allowedDelimiters = new List<char>() {'|', ',',' '};
+        public static List<char> allowedDelimiters = new List<char>() { '|', ',', ' ' }; //can change/add more delimeters later.
         private static readonly char parsedFileDelmiter = ',';
 
         public static List<Person> GetSortedList(SortedBy sortedBy, out string header)
@@ -50,7 +51,55 @@ namespace PersonInfoImport.Helper
                 throw ex;
             }
         }
+        /// <summary>
+        /// 
+        ///// </summary>
+        /// <param name="record"></param>
+        /// <returns></returns>
+        public static string AddRecordUsingRestAPI(string record)
+        {
+            try
+            {
+                string response = RestAPIHelper.PostRestAPI(EndPointList.postRecord, record);
 
+                return response;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sortedBy"></param>
+        /// <param name="header"></param>
+        /// <returns></returns>
+        public static List<Person> GetSortedListUsingRestAPI(SortedBy sortedBy, out string header)
+        {
+            try
+            {
+                header = null;
+                string endPoint = RestAPIHelper.GetEndpoint((int)sortedBy);
+                string jsonData = RestAPIHelper.GetRestAPI(endPoint);
+                dynamic oData = JsonConvert.DeserializeObject<dynamic>(jsonData);
+                PersonList list = JsonConvert.DeserializeObject<PersonList>(oData.Data.ToString());
+                if (list != null)
+                {
+                    header = list.Title;
+                    return list.Persons;
+                }
+                else
+                    return null;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        /// <summary>
+        /// 
+        /// </summary>
         public static void LoadTestData()
         {
             try
@@ -65,7 +114,10 @@ namespace PersonInfoImport.Helper
             }
 
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="fileNames"></param>
         public static void ParseFiles(string fileNames)
         {
             try
@@ -74,7 +126,7 @@ namespace PersonInfoImport.Helper
                     throw new ArgumentNullException("Filename is empty");
 
                 string[] aryFileName = fileNames.Split(parsedFileDelmiter);
-                foreach(var fileName in aryFileName)
+                foreach (var fileName in aryFileName)
                 {
                     if (!string.IsNullOrEmpty(fileName.Trim()))
                         ParseFile(fileName.Trim());
@@ -87,55 +139,78 @@ namespace PersonInfoImport.Helper
                 throw;
             }
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="fileName"></param>
+        /// <exception cref="ArgumentNullException"></exception>
+        /// <exception cref="Exception"></exception>
         public static void ParseFile(string fileName)
         {
-            try
+            if (string.IsNullOrEmpty(fileName))
+                throw new ArgumentNullException("Filename is null or empty.");
+
+            //add path for test data
+            if (!fileName.Contains("\\"))
             {
-                if (string.IsNullOrEmpty(fileName))
-                    throw new ArgumentNullException("Filename is empty");
-
-                //add path for test data
-                if (!fileName.Contains("\\"))
-                {
-                    string pathParent = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
-                    fileName = Path.Combine(pathParent,"Data\\" + fileName);
-                }
-
-
-                if (!File.Exists(fileName))
-                    throw new Exception("File [" + fileName + "] doesn't exist");
-
-
-                var lines = File.ReadLines(fileName);
-               
-                foreach (var line in lines)
-                {
-                    try
-                    {
-                        var person = ParsePersonData(line);
-
-                        if (person != null)
-                            personList.Add(person);
-                    }
-                    catch (Exception ex)
-                    {
-                        //skip error and continue to add the rest. Can be added to log or output if needed.
-                    }
-                }
-
+                string pathParent = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
+                fileName = Path.Combine(pathParent, "Data\\" + fileName);
             }
-            catch (Exception ex)
+
+            if (!File.Exists(fileName))
+                throw new Exception("File [" + fileName + "] doesn't exist.");
+
+            var lines = File.ReadLines(fileName);
+
+            List<Person> newPersonList = new List<Person>();
+            foreach (var line in lines)
             {
-                throw new Exception("Error on ParseFile: " + ex.Message);
+                try
+                {
+                    var person = ParsePersonData(line);
+
+                    if (person != null)
+                        newPersonList.Add(person);
+                }
+                catch (Exception ex)
+                {
+                    //skip error and continue to add the rest. Can be added to log or output if needed.
+                }
             }
+
+            if (newPersonList.Count > 0)
+                personList.AddRange(newPersonList);
+            else
+                throw new Exception("File [" + fileName + "] doesn't have supported delimeters.");
+
+
+
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="record"></param>
+        /// <returns></returns>
+        public static Person ParseRecord(string record)
+        {
+            Person person = ParsePersonData(record);
+            if (person != null)
+                personList.Add(person);
 
+            return person;
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
         public static Person ParsePersonData(string data)
         {
             try
             {
-            
-                foreach(var allowedDim in allowedDelimiters)
+
+                foreach (var allowedDim in allowedDelimiters)
                 {
                     if (data.Contains(allowedDim))
                     {
@@ -151,6 +226,7 @@ namespace PersonInfoImport.Helper
 
                             return person;
                         }
+                        break;
                     }
                 }
             }

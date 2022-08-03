@@ -10,11 +10,11 @@ namespace PersonInfoImport.RestAPI
 {
     public class PersonRestService: IPersonRestService
     {
-        public string PostPerson(string personData)
+        public string PostPerson(string record)
         {
             try
             {
-                var person = PersonHelper.ParsePersonData(personData);
+                var person = PersonHelper.ParseRecord(record);
                 if (person != null)
                     return person.FirstName + " " + person.LastName + " data has been added successfully.";
                 else

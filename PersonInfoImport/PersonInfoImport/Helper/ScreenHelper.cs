@@ -21,10 +21,10 @@ namespace PersonInfoImport.Helper
         private static readonly string restAPIScreenText = @"
 *** Rest API calls information with the following methods and endpoints:
 - Base Url: " + RestAPIHelper.serviceBaseAddress + @"
-- POST /records - Post a single data line in any of the 3 supported formats.
-- GET /records/color - returns records sorted by favorite color. Enter 1 to view this in the browser.
-- GET /records/birthdate - returns records sorted by birthdate. Enter 2 to view this in the browser.
-- GET /records/name - returns records sorted by last name. Enter 3 to view this in the browser.
+- POST " + EndPointList.postRecord + @" - Post a single data line in any of the 3 supported formats.
+- GET " + EndPointList.color + @" - returns records sorted by favorite color. Enter 1 to view this in the browser.
+- GET " + EndPointList.birthdate + @" - returns records sorted by birthdate. Enter 2 to view this in the browser.
+- GET " + EndPointList.name + @" - returns records sorted by last name. Enter 3 to view this in the browser.
 => Enter 1, 2, 3 to get the data in browser or 0 to go back: ";
         private static readonly string importScreenText = @" 
 *** Add Data: Records can be added by importing the text file(s) or posting a single record.  
@@ -33,9 +33,9 @@ Each record must be either in the pipe-delimited format (LastName | FirstName | 
 or in the comma-delimited (LastName, FirstName, Email, FavoriteColor, DateOfBirth)
 or in space-delimited (LastName FirstName Email FavoriteColor DateOfBirth)
 There are 3 options to add data:
-1. Run a command Prompt as an Administrator and enter: PersonInfoImport.exe file1.txt file2.txt file3.txt.
-2. Use Rest API client to post a record using url: " + RestAPIHelper.serviceBaseAddress + @".
-3. Enter the fileName(s) seperated by a comma here, or enter Test to import test data, or enter C to cancel: ";
+- Run a command Prompt as an Administrator and enter: PersonInfoImport.exe file1.txt file2.txt file3.txt.
+- Use Rest API client to post a record using url: " + RestAPIHelper.serviceBaseAddress + @".
+=> Enter the fileName(s) seperated by a comma here, or enter Test to import test data, or enter C to cancel: ";
         private static readonly string mainScreenInvalidText = "=> Invalid value entered. Please enter from 1 to 6: ";
         private static readonly string restAPIScreenInvalidText = "=> Invalid value entered. Please Enter from 0 to 3:";
 
@@ -47,10 +47,15 @@ There are 3 options to add data:
             ListByLastName = 4,
             RestAPIInfo = 5,
             ExitApp = 6
+
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sortedBy"></param>
         public static void ShowListByScreen(SortedBy sortedBy)
         {
-            List<Person> personList = PersonHelper.GetSortedList(sortedBy,out string header);
+            List<Person> personList = PersonHelper.GetSortedList(sortedBy, out string header);
             Console.WriteLine("");
             Console.WriteLine(header + " (Total: " + personList.Count.ToString() + ")");
 
@@ -66,7 +71,10 @@ There are 3 options to add data:
 
 
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="showText"></param>
         public static void ShowMainScreen(bool showText)
         {
             if (showText)
@@ -123,7 +131,10 @@ There are 3 options to add data:
                 throw ex;
             }
         }
- 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="showText"></param>
         public static void ShowRestAPIScreen(bool showText)
         {
             if (showText)
@@ -145,15 +156,9 @@ There are 3 options to add data:
                 {
                     if (key == 0)
                         return;
-                    else if (key>0 && key<=3)
+                    else if (key > 0 && key <= 3)
                     {
-                        string url = RestAPIHelper.serviceBaseAddress;
-                        if (key == (int)SortedBy.ColorLastNameAsc)
-                            url += "/records/color";
-                        else if (key == (int)SortedBy.BirthDateAsc)
-                            url += "/records/birthdate";
-                        else if (key == (int)SortedBy.LastNameDsc)
-                            url += "/records/name";
+                        string url = RestAPIHelper.serviceBaseAddress + RestAPIHelper.GetEndpoint(key);
 
                         System.Diagnostics.Process.Start(url);
                         ShowRestAPIScreen(true);
@@ -164,7 +169,7 @@ There are 3 options to add data:
                         ShowRestAPIScreen(false);
                     }
                 }
-               
+
 
             }
             catch (Exception ex)
@@ -172,7 +177,10 @@ There are 3 options to add data:
                 Console.WriteLine("Error: " + ex.Message);
             }
         }
- 
+
+        /// <summary>
+        /// 
+        /// </summary>
         public static void ReadImportScreen()
         {
             Console.WriteLine("");
@@ -204,7 +212,10 @@ There are 3 options to add data:
                 Console.WriteLine("Error: " + ex.Message);
             }
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="totalAdded"></param>
         public static void ShowOutputScreen(int totalAdded)
         {
             Console.WriteLine("");
