@@ -9,7 +9,36 @@ namespace PersonInfoImport.Helper
 {
     public class ScreenHelper
     {
-  
+        private static readonly string mainScreenText = @"
+*** Person Info App: Please select the following options:
+1. Add data.
+2. List existing records sorted by favorite color then by last name ascending.
+3. List existing records sorted by birth date, ascending.
+4. List existing records sorted by last name, descending.
+5. Rest API calls information.
+6. Exit Application.
+=> Please enter 1-6: ";
+        private static readonly string restAPIScreenText = @"
+*** Rest API calls information with the following methods and endpoints:
+- Base Url: " + RestAPIHelper.serviceBaseAddress + @"
+- POST /records - Post a single data line in any of the 3 supported formats.
+- GET /records/color - returns records sorted by favorite color. Enter 1 to view this in the browser.
+- GET /records/birthdate - returns records sorted by birthdate. Enter 2 to view this in the browser.
+- GET /records/name - returns records sorted by last name. Enter 3 to view this in the browser.
+=> Enter 1, 2, 3 to get the data in browser or 0 to go back: ";
+        private static readonly string importScreenText = @" 
+*** Add Data: Records can be added by importing the text file(s) or posting a single record.  
+Each text file must have each record listed in a single line and no header is included.  
+Each record must be either in the pipe-delimited format (LastName | FirstName | Email | FavoriteColor | DateOfBirth),
+or in the comma-delimited (LastName, FirstName, Email, FavoriteColor, DateOfBirth)
+or in space-delimited (LastName FirstName Email FavoriteColor DateOfBirth)
+There are 3 options to add data:
+1. Run a command Prompt as an Administrator and enter: PersonInfoImport.exe file1.txt file2.txt file3.txt.
+2. Use Rest API client to post a record using url: " + RestAPIHelper.serviceBaseAddress + @".
+3. Enter the fileName(s) seperated by a comma here, or enter Test to import test data, or enter C to cancel: ";
+        private static readonly string mainScreenInvalidText = "=> Invalid value entered. Please enter from 1 to 6: ";
+        private static readonly string restAPIScreenInvalidText = "=> Invalid value entered. Please Enter from 0 to 3:";
+
         private enum mainOptions
         {
             ImportFile = 1,
@@ -24,35 +53,25 @@ namespace PersonInfoImport.Helper
         {
             List<Person> personList = PersonHelper.GetSortedList(sortedBy,out string header);
             Console.WriteLine("");
-            Console.WriteLine(header + ": ");
+            Console.WriteLine(header + " (Total: " + personList.Count.ToString() + ")");
 
-            Console.WriteLine(new String('-', 90));
-            Console.WriteLine("{0,-12} {1,-12} {2,-25} {3,-20} {4,15}", "Last Name", "First Name", "Email", "Favorite Color", "Date of Birth");
+            Console.WriteLine(new String('-', 100));
+            Console.WriteLine("{0,-17} {1,-17} {2,-30} {3,-15} {4,15}", "Last Name", "First Name", "Email", "Favorite Color", "Date of Birth");
+            Console.WriteLine("{0,-17} {1,-17} {2,-30} {3,-15} {4,15}", "---------", "----------", "-----", "--------------", "-------------");
             foreach (Person person in personList)
             {
-                Console.WriteLine("{0,-12} {1,-12} {2,-25} {3,-20} {4,15}", person.LastName, person.FirstName, person.Email, person.FavoriteColor, person.DateOfBirth.ToString("M/d/yyyy"));
+                Console.WriteLine("{0,-17} {1,-17} {2,-30} {3,-15} {4,15}", person.LastName, person.FirstName, person.Email, person.FavoriteColor, person.DateOfBirth.ToString("M/d/yyyy"));
             }
-            Console.WriteLine(new String('-', 90));
+            Console.WriteLine(new String('-', 100));
             Console.WriteLine("");
 
 
         }
 
-        public static void ShowMainScreen()
+        public static void ShowMainScreen(bool showText)
         {
-            Console.Write(
-                @"Please select the following options:
-1. Import data.
-2. List existing records sorted by favorite color then by last name ascending.
-3. List existing records sorted by birth date, ascending.
-4. List existing records sorted by last name, descending.
-5. Rest API calls information.
-6. Exit Application.
-=> Please enter 1-6: ");
-        }
-        public static void ReadMainScreen()
-        {
-            ShowMainScreen();
+            if (showText)
+                Console.Write(mainScreenText);
 
             try
             {
@@ -60,8 +79,8 @@ namespace PersonInfoImport.Helper
 
                 if (!int.TryParse(line, out int key))
                 {
-                    Console.WriteLine("Invalid value entered. Please enter 1-6: ");
-                    ReadMainScreen();
+                    Console.Write(mainScreenInvalidText);
+                    ShowMainScreen(false);
                 }
                 else
                 {
@@ -83,7 +102,7 @@ namespace PersonInfoImport.Helper
                     }
                     else if (key == (int)mainOptions.RestAPIInfo)
                     {
-                        ReadRestAPIScreen();
+                        ShowRestAPIScreen(true);
                     }
                     else if (key == (int)mainOptions.ExitApp)
                     {
@@ -91,12 +110,12 @@ namespace PersonInfoImport.Helper
                     }
                     else
                     {
-                        Console.WriteLine("Invalid value entered. Please enter 1-6: ");
-                        ReadMainScreen();
+                        Console.Write(mainScreenInvalidText);
+                        ShowMainScreen(false);
                     }
                 }
 
-                ReadMainScreen();
+                ShowMainScreen(true);
 
             }
             catch (Exception ex)
@@ -105,23 +124,14 @@ namespace PersonInfoImport.Helper
                 throw ex;
             }
         }
-
-        public static void ShowRestAPIScreen()
+ 
+        public static void ShowRestAPIScreen(bool showText)
         {
-            Console.WriteLine("");
-            Console.WriteLine("");
-            Console.Write(
-@"Rest API calls information with the following methods and endpoints:
-* Base Url: http://localhost:8080
-* POST /records - Post a single data line in any of the 3 formats supported by your existing code
-* GET /records/color - returns records sorted by favorite color. Enter 1 to see this in the browser.
-* GET /records/birthdate - returns records sorted by birthdate. Enter 2 to see this in the browser.
-* GET /records/name - returns records sorted by last name. Enter 3 to see this in the browser.
-=> Enter 1, 2, 3 to get the data in browser or 0 to go back: ");
-        }
-        public static void ReadRestAPIScreen()
-        {
-            ShowRestAPIScreen();
+            if (showText)
+            {
+                Console.WriteLine("");
+                Console.Write(restAPIScreenText);
+            }
 
             try
             {
@@ -129,8 +139,8 @@ namespace PersonInfoImport.Helper
 
                 if (!int.TryParse(line, out int key))
                 {
-                    Console.WriteLine("Invalid value entered. try again: ");
-                    ReadMainScreen();
+                    Console.Write(restAPIScreenInvalidText);
+                    ShowRestAPIScreen(false);
                 }
                 else
                 {
@@ -147,12 +157,12 @@ namespace PersonInfoImport.Helper
                             url += "/records/name";
 
                         System.Diagnostics.Process.Start(url);
-                        ReadRestAPIScreen();
+                        ShowRestAPIScreen(true);
                     }
                     else
                     {
-                        Console.WriteLine("Invalid input. Please try again: ");
-                        ReadRestAPIScreen();
+                        Console.Write(restAPIScreenInvalidText);
+                        ShowRestAPIScreen(false);
                     }
                 }
                
@@ -163,21 +173,11 @@ namespace PersonInfoImport.Helper
                 Console.WriteLine("Error: " + ex.Message);
             }
         }
-
-        public static void ShowImportScreen()
-        {
-            Console.WriteLine("");
-            Console.WriteLine("");
-            Console.Write(
-@"Import Data: 3 options below. 
-1. Run a command Prompt as an Administrator and enter: PersonInfoImport.exe file1.txt file2.txt file3.txt. 
-2. Use Rest API client to post a record using url: http://localhost:8080/records.
-3. Enter the fileName(s) seperated by a comma here, or enter Test to import test data, or enter C to cancel: ");
-        }
-
+ 
         public static void ReadImportScreen()
         {
-            ShowImportScreen();
+            Console.WriteLine("");
+            Console.Write(importScreenText);
 
             try
             {

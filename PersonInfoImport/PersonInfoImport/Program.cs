@@ -19,8 +19,16 @@ namespace PersonInfoImport
                 }
                 ScreenHelper.ShowOutputScreen(PersonHelper.personList.Count);
             }
-            RestAPIHelper.StartRestAPIHost();
-            ScreenHelper.ReadMainScreen();
+            try
+            {
+                RestAPIHelper.StartRestAPIHost();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error on starting Rest API endpoints. Please restart the app as an Administrator to use Rest API endpoints. You may continue to use the other features.");
+            }
+
+            ScreenHelper.ShowMainScreen(true);
         }
     }
 }

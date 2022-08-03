@@ -19,7 +19,7 @@ namespace PersonInfoImport.Helper
         public static List<Person> personList = new List<Person>();
 
         public static List<char> allowedDelimiters = new List<char>() {'|', ',',' '};
-        private const char parsedFileDelmiter = ',';
+        private static readonly char parsedFileDelmiter = ',';
 
         public static List<Person> GetSortedList(SortedBy sortedBy, out string header)
         {

@@ -11,7 +11,7 @@ namespace PersonInfoImport.Helper
 {
     public class RestAPIHelper
     {
-        public static string serviceBaseAddress = "http://localhost:8080";
+        public static readonly string serviceBaseAddress = "http://localhost:8080";
         public static void StartRestAPIHost()
         {
             ServiceHost personHost = new ServiceHost(typeof(PersonRestService), new Uri(serviceBaseAddress));
