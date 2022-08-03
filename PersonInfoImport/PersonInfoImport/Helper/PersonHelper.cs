@@ -169,7 +169,7 @@ namespace PersonInfoImport.Helper
                 {
                     var person = ParsePersonData(line);
 
-                    if (person != null)
+                    if (person != null && person.LastName!= "LastName" && person.FirstName!="FirstName")  //skip header
                         newPersonList.Add(person);
                 }
                 catch (Exception ex)
