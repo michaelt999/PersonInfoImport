@@ -64,7 +64,7 @@ These endpoints should return JSON. To keep it simple, don't worry about using a
 ![image](https://user-images.githubusercontent.com/110483918/182724780-6c003bc7-8b15-43d1-953a-321d510c4e76.png)
 
 
-### 1. Unit Test: 
+### 1. Unit Tests: 
 There are 19 tests to test good data, bad data, order lists, and Rest Api calls.
 
 * Test Result Screen:
@@ -72,7 +72,7 @@ There are 19 tests to test good data, bad data, order lists, and Rest Api calls.
 ![image](https://user-images.githubusercontent.com/110483918/182725062-689235b3-3847-4519-805d-fff5e76136e3.png)
 
 
-Last Updated: 8/3/2022 By Michael Tran.
+* Last Updated: 8/3/2022 By Michael Tran.
 
 
 
