@@ -47,7 +47,6 @@ There are 3 options to add data:
             ListByLastName = 4,
             RestAPIInfo = 5,
             ExitApp = 6
-
         }
         public static void ShowListByScreen(SortedBy sortedBy)
         {
