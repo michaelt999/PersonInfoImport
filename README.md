@@ -53,7 +53,7 @@ These endpoints should return JSON. To keep it simple, don't worry about using a
 
 ![image](https://user-images.githubusercontent.com/110483918/182724200-df9795d4-e94c-41d2-8455-77e064281680.png)
 
-* Load Test data: All 3 test files in Data folder are imported when user enter "test" in the add data menu.
+* Load Test data: All 3 test files in Data folder would be imported when user enters "test" in the add data screen.
 ```
 //Test file 1: Data\TestDataComma.txt
 Lehmann, Dana, danal@test.com, orange, 5/3/1982
