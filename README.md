@@ -54,15 +54,15 @@ These endpoints should return JSON. To keep it simple, don't worry about using a
 ![image](https://user-images.githubusercontent.com/110483918/182724200-df9795d4-e94c-41d2-8455-77e064281680.png)
 
 * Load Test data:
-- TestDataComma.txt
-Lehmann, Dana, danal@test.com, orange, 5/3/1982
+//TestDataComma.txt
+```Lehmann, Dana, danal@test.com, orange, 5/3/1982
 Harrison, Vanessa, vanessah@test.com, pink, 8/1/1991
-Cordova, Maria, mariac@test.com, violet, 7/22/1978
-- TestDataPipe.txt
+Cordova, Maria, mariac@test.com, violet, 7/22/1978```
+//TestDataPipe.txt
 Silver | Robin | robins@test.com | rose | 2/5/1969
 Stewart | Anthony | anthonys@test.com | green | 3/29/1989
 Pierce | Matthew | matthewp@test.com | blue | 11/25/1975
--TestDataSpace.txt
+//TestDataSpace.txt
 Jensen Chris chrisj@test.com blue 7/21/1979
 Russell Meghan meghanr@test.com pink 12/5/1987
 Rankin Mark markr@test.com red 1/15/1982
