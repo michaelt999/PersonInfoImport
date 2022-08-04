@@ -37,7 +37,7 @@ These endpoints should return JSON. To keep it simple, don't worry about using a
 * All the fields of the record must in the same order: LastName, FirstName, Email, FavoriteColor, and DateOfBirth.
 * The allowed delimiters (commas, pipes and spaces) do not appear anywhere in the data values themselves
 * The Rest API Get sorted lists are the same as those used in the Outputs (#2 in the requirements).
-* If the file contain some bad records with unsupported delimiters or missing field(s), they would be skipped.  The good records in the same file are still imported.
+* If the imported file contains some bad records with unsupported delimiters or missing field(s), they would be skipped.  The good records in that file would be still added.
 * The command line can take one file or multiple files seperated by a space.
 * The console app can take one file, multiple files, or load sample test files.
 * Rest API based address/port: http://localhost:8080.  If the port is blocked, please change it in Helper/RestAPIHelper.cs.
