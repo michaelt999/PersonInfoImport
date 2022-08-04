@@ -82,7 +82,7 @@ Rankin Mark markr@test.com red 1/15/1982
 
 
 ### 1. Unit Tests: 
-There are 19 tests to test good data, bad data, order lists, and Rest Api calls.
+There are 20 tests to check good data, bad data, order lists, and Rest Api calls.
 
 * Test Result Screen:
 
