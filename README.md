@@ -40,7 +40,7 @@ These endpoints should return JSON. To keep it simple, don't worry about using a
 * If the imported file contains some bad records with unsupported delimiters or missing field(s), they would be skipped.  The good records in that file would be still added.
 * The command line can take one file or multiple files seperated by a space.
 * The console app can take one file, multiple files, or load sample test files.
-* Rest API based address/port: http://localhost:8080.  If the port is blocked, please change it in Helper/RestAPIHelper.cs.
+* Rest API based address:port is http://localhost:8080.  If the port is blocked, please change it in Helper/RestAPIHelper.cs.
 * User must run the Console App or VS Studio as Administrator for Rest API host to work.
 
 ### 1. Console App:
