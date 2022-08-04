@@ -36,7 +36,7 @@ These endpoints should return JSON. To keep it simple, don't worry about using a
 * The imported file has no header.  If it has a header with the same column names, the header will be checked and ignored.  
 * All the fields of the record must in the same order: LastName, FirstName, Email, FavoriteColor, and DateOfBirth.
 * The allowed delimiters (commas, pipes and spaces) do not appear anywhere in the data values themselves
-* If more than 1 allowed delimiters exist in the record, the first found delimeter in order (pipe, comma, space) will be used.  The other delimeters will be ignored. The spaces will be trimmed.
+* If multipled allowed delimiters exist in the record, the first found delimeter in order (pipe, comma, space) will be used.  The other delimeters will be ignored. The spaces will be trimmed.
 * The Rest API Get sorted lists are the same as those used in the Outputs (#2 in the requirements).
 * If the imported file contains some bad records with unsupported delimiters or missing field(s), they would be skipped.  The good records in that file would be still added.
 * The command line can take one file or multiple files seperated by a space.
