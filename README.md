@@ -59,10 +59,12 @@ These endpoints should return JSON. To keep it simple, don't worry about using a
 Lehmann, Dana, danal@test.com, orange, 5/3/1982
 Harrison, Vanessa, vanessah@test.com, pink, 8/1/1991
 Cordova, Maria, mariac@test.com, violet, 7/22/1978
+
 //Data\TestDataPipe.txt
 Silver | Robin | robins@test.com | rose | 2/5/1969
 Stewart | Anthony | anthonys@test.com | green | 3/29/1989
 Pierce | Matthew | matthewp@test.com | blue | 11/25/1975
+
 //Data\TestDataSpace.txt
 Jensen Chris chrisj@test.com blue 7/21/1979
 Russell Meghan meghanr@test.com pink 12/5/1987
