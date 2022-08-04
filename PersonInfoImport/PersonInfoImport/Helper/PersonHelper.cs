@@ -22,6 +22,11 @@ namespace PersonInfoImport.Helper
         public static List<char> allowedDelimiters = new List<char>() { '|', ',', ' ' }; //can change/add more delimeters later.
         private static readonly char parsedFileDelmiter = ',';
 
+        public static void ClearData()
+        {
+            personList.Clear();
+        }
+
         public static List<Person> GetSortedList(SortedBy sortedBy, out string header)
         {
             try
@@ -167,10 +172,7 @@ namespace PersonInfoImport.Helper
             {
                 try
                 {
-                    var person = ParsePersonData(line);
-
-                    if (person != null && person.LastName!= "LastName" && person.FirstName!="FirstName")  //skip header
-                        newPersonList.Add(person);
+                    ParseRecord(newPersonList, line); 
                 }
                 catch (Exception ex)
                 {
@@ -191,11 +193,14 @@ namespace PersonInfoImport.Helper
         /// </summary>
         /// <param name="record"></param>
         /// <returns></returns>
-        public static Person ParseRecord(string record)
+        public static Person ParseRecord(List<Person> list, string record)
         {
+            if (list == null)
+                list = personList; 
+
             Person person = ParsePersonData(record);
-            if (person != null)
-                personList.Add(person);
+            if (person != null && person.LastName != "LastName" && person.FirstName != "FirstName")  //skip header
+                list.Add(person);
 
             return person;
         }
@@ -229,13 +234,16 @@ namespace PersonInfoImport.Helper
                         break;
                     }
                 }
+
+                //no person added
+                throw new Exception("Bad data. Parsing the record has failed.");
             }
             catch (Exception ex)
             {
                 throw new Exception("Error on ParsePersonData: " + ex.Message);
             }
 
-            return null;
+           
         }
 
 

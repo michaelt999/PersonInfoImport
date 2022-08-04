@@ -14,7 +14,7 @@ namespace PersonInfoImport.RestAPI
         {
             try
             {
-                var person = PersonHelper.ParseRecord(record);
+                var person = PersonHelper.ParseRecord(null,record);
                 if (person != null)
                     return person.FirstName + " " + person.LastName + " data has been added successfully.";
                 else

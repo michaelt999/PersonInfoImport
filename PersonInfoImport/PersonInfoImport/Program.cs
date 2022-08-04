@@ -25,7 +25,7 @@ namespace PersonInfoImport
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Error on starting Rest API endpoints. Please restart the app as an Administrator to use Rest API endpoints. You may continue to use the other features.");
+                Console.WriteLine("Error on starting Rest API endpoints. Please restart the app as an Administrator to use Rest API endpoints. You may continue to use the other features. Error: " + ex.Message);
             }
 
             ScreenHelper.ShowMainScreen(true);

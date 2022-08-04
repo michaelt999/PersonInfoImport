@@ -26,7 +26,7 @@ namespace PersonInfoImportTest
         [TestCategory("Good Data")]
         public void GoodParsingPipeFile()
         {
-            PersonHelper.personList.Clear();
+            PersonHelper.ClearData();
             PersonHelper.ParseFile(testDataPipePath);
             Assert.AreEqual("Pipe3", PersonHelper.personList[2].FirstName);
             Assert.AreEqual(3, PersonHelper.personList.Count);
@@ -37,7 +37,7 @@ namespace PersonInfoImportTest
         [TestCategory("Good Data")]
         public void GoodParsingCommaFile()
         {
-            PersonHelper.personList.Clear();
+            PersonHelper.ClearData();
             PersonHelper.ParseFile(testDataCommaPath);
             Assert.AreEqual("Comma6", PersonHelper.personList[2].FirstName);
             Assert.AreEqual(3, PersonHelper.personList.Count);
@@ -48,7 +48,7 @@ namespace PersonInfoImportTest
         [TestCategory("Good Data")]
         public void GoodParsingSpaceFile()
         {
-            PersonHelper.personList.Clear();
+            PersonHelper.ClearData();
             PersonHelper.ParseFile(testDataSpacePath);
             Assert.AreEqual("Space9", PersonHelper.personList[2].FirstName);
             Assert.AreEqual(3, PersonHelper.personList.Count);
@@ -59,7 +59,7 @@ namespace PersonInfoImportTest
         [TestCategory("Good Data")]
         public void GoodParsingMultipleFiles()
         {
-            PersonHelper.personList.Clear();
+            PersonHelper.ClearData();
             PersonHelper.ParseFiles(testDataMultipleFiles);
             Assert.AreEqual("Space9", PersonHelper.personList[8].FirstName);
             Assert.AreEqual(9, PersonHelper.personList.Count);
@@ -70,7 +70,7 @@ namespace PersonInfoImportTest
         [TestCategory("Good Data")]
         public void GoodParsingSomeBadRecordsFile()
         {
-            PersonHelper.personList.Clear();
+            PersonHelper.ClearData();
             PersonHelper.ParseFile(testDataSomeBadRecordPath);
             Assert.AreEqual("Pipe3", PersonHelper.personList[0].FirstName);
             Assert.AreEqual(1, PersonHelper.personList.Count);
@@ -81,8 +81,8 @@ namespace PersonInfoImportTest
         [TestCategory("Good Data")]
         public void GoodParsingSingleRecord()
         {
-            PersonHelper.personList.Clear();
-            PersonHelper.ParseRecord(testDataPipe1);
+            PersonHelper.ClearData();
+            PersonHelper.ParseRecord(null, testDataPipe1);
             Assert.AreEqual("Pipe1", PersonHelper.personList[0].FirstName);
             Assert.AreEqual(1, PersonHelper.personList.Count);
         }
@@ -92,7 +92,7 @@ namespace PersonInfoImportTest
         [TestCategory("List By Order")]
         public void ListOrderByColor()
         {
-            PersonHelper.personList.Clear();
+            PersonHelper.ClearData();
             PersonHelper.ParseFiles(testDataMultipleFiles);
             List<Person> list = PersonHelper.GetSortedList(SortedBy.ColorLastNameAsc, out string header);
             Assert.AreEqual("B3", list[0].LastName);
@@ -104,7 +104,7 @@ namespace PersonInfoImportTest
         [TestCategory("List By Order")]
         public void ListOrderByBirthDate()
         {
-            PersonHelper.personList.Clear();
+            PersonHelper.ClearData();
             PersonHelper.ParseFiles(testDataMultipleFiles);
             List<Person> list = PersonHelper.GetSortedList(SortedBy.BirthDateAsc, out string header);
             Assert.AreEqual("E5", list[0].LastName);
@@ -116,7 +116,7 @@ namespace PersonInfoImportTest
         [TestCategory("List By Order")]
         public void ListOrderByLastName()
         {
-            PersonHelper.personList.Clear();
+            PersonHelper.ClearData();
             PersonHelper.ParseFiles(testDataMultipleFiles);
             List<Person> list = PersonHelper.GetSortedList(SortedBy.LastNameDsc, out string header);
             Assert.AreEqual("I9", list[0].LastName);
@@ -129,7 +129,7 @@ namespace PersonInfoImportTest
         [TestCategory("Bad Data")]
         public void BadParsingEmptyFile()
         {
-            PersonHelper.personList.Clear();
+            PersonHelper.ClearData();
             PersonHelper.ParseFile("");
 
         }
@@ -139,7 +139,7 @@ namespace PersonInfoImportTest
         [TestCategory("Bad Data")]
         public void BadParsingNullFile()
         {
-            PersonHelper.personList.Clear();
+            PersonHelper.ClearData();
             PersonHelper.ParseFile(null);
         }
 
@@ -148,7 +148,7 @@ namespace PersonInfoImportTest
         [TestCategory("Bad Data")]
         public void BadParsingNonExistingFile()
         {
-            PersonHelper.personList.Clear();
+            PersonHelper.ClearData();
             try
             {
                 PersonHelper.ParseFile(testDataNonExistPath);
@@ -165,7 +165,7 @@ namespace PersonInfoImportTest
         [TestCategory("Bad Data")]
         public void BadParsingUnsupportedFile()
         {
-            PersonHelper.personList.Clear();
+            PersonHelper.ClearData();
             try
             {
                 PersonHelper.ParseFile(testDataUnsupportedPath);
@@ -181,8 +181,15 @@ namespace PersonInfoImportTest
         [TestCategory("Bad Data")]
         public void BadParsingBadRecord()
         {
-            PersonHelper.personList.Clear();
-            PersonHelper.ParseRecord(testDataBad10);
+            PersonHelper.ClearData();
+            try
+            {
+                PersonHelper.ParseRecord(null, testDataMissing11);
+            }
+            catch (Exception ex)
+            {
+                Assert.IsTrue(ex.Message.Contains("Bad data"));
+            }
             Assert.AreEqual(0, PersonHelper.personList.Count);
         }
 
@@ -191,8 +198,16 @@ namespace PersonInfoImportTest
         [TestCategory("Bad Data")]
         public void BadParsingMissingRecord()
         {
-            PersonHelper.personList.Clear();
-            PersonHelper.ParseRecord(testDataMissing11);
+            PersonHelper.ClearData();
+            try
+            {
+                PersonHelper.ParseRecord(null,testDataMissing11);
+            }
+            catch (Exception ex)
+            {
+                Assert.IsTrue(ex.Message.Contains("Bad data"));
+            }
+            
             Assert.AreEqual(0, PersonHelper.personList.Count);
         }
         
@@ -200,9 +215,9 @@ namespace PersonInfoImportTest
         [TestMethod]
         [Description("Test post a record using Rest API endpoint.  Expected 1 record is added.")]
         [TestCategory("Rest Api")]
-        public void RestAPIPostRecord()
+        public void RestAPIPostGoodRecord()
         {
-            PersonHelper.personList.Clear();
+            PersonHelper.ClearData();
             string result = PersonHelper.AddRecordUsingRestAPI(testDataPipe1);
             Assert.AreEqual("Pipe1", PersonHelper.personList[0].FirstName);
             Assert.AreEqual(1, PersonHelper.personList.Count);
@@ -214,7 +229,7 @@ namespace PersonInfoImportTest
         [TestCategory("Rest Api")]
         public void RestAPIGetByColor()
         {
-            PersonHelper.personList.Clear();
+            PersonHelper.ClearData();
             PersonHelper.ParseFiles(testDataMultipleFiles);
             List<Person> list = PersonHelper.GetSortedListUsingRestAPI(SortedBy.ColorLastNameAsc, out string header);
             Assert.AreEqual("B3", list[0].LastName);
@@ -226,7 +241,7 @@ namespace PersonInfoImportTest
         [TestCategory("Rest Api")]
         public void RestAPIGetByBirthDate()
         {
-            PersonHelper.personList.Clear();
+            PersonHelper.ClearData();
             PersonHelper.ParseFiles(testDataMultipleFiles);
             List<Person> list = PersonHelper.GetSortedListUsingRestAPI(SortedBy.BirthDateAsc, out string header);
             Assert.AreEqual("E5", list[0].LastName);
@@ -238,11 +253,22 @@ namespace PersonInfoImportTest
         [TestCategory("Rest Api")]
         public void RestAPIGetByName()
         {
-            PersonHelper.personList.Clear();
+            PersonHelper.ClearData();
             PersonHelper.ParseFiles(testDataMultipleFiles);
             List<Person> list = PersonHelper.GetSortedListUsingRestAPI(SortedBy.LastNameDsc, out string header);
             Assert.AreEqual("I9", list[0].LastName);
             Assert.AreEqual(9, list.Count);
+        }
+
+        [TestMethod]
+        [Description("Test post a record using Rest API endpoint.  Expected 1 record is added.")]
+        [TestCategory("Rest Api")]
+        public void RestAPIPostBadRecord()
+        {
+            PersonHelper.ClearData();
+            string result = PersonHelper.AddRecordUsingRestAPI(testDataBad10);
+            Assert.IsTrue(result.Contains("Bad data"));
+            Assert.AreEqual(0, PersonHelper.personList.Count);
         }
 
     }
