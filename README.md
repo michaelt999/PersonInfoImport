@@ -32,8 +32,8 @@ These endpoints should return JSON. To keep it simple, don't worry about using a
 ## Developments
 
 ### 1. Assumptions:
-* All the functionalities are in the same code base.  So, there's no need to create a seperate library or Web API.
-* The imported file has no header.  If it has a header with the same  column, the header will be be ignored.  
+* All the functionalities are in the same code base.  So, there's no need to create a seperate library or Web API project.
+* The imported file has no header.  If it has a header with the same column names, the header will be checked and ignored.  
 * All the fields of the record must in the same order: LastName, FirstName, Email, FavoriteColor, and DateOfBirth.
 * The allowed delimiters (commas, pipes and spaces) do not appear anywhere in the data values themselves
 * The Rest API Get sorted lists are the same as those used in the Outputs (#2 in the requirements).
