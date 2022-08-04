@@ -1,5 +1,5 @@
 # Person Info Import
-A console application that takes as input a file or multiple files, each with a set of records in one of the allowed formats.
+A console application that takes as input a file or multiple files, each with a set of records in one of the allowed formats. The imported records can be displayed in predefined sorted orders. The application also creates service endpoints at http://localhost:8080 to access the system via Rest Api Post/Get calls.
 
 ## Requirements
 
