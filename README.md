@@ -55,17 +55,17 @@ These endpoints should return JSON. To keep it simple, don't worry about using a
 
 * Load Test data: All 3 test files in Data folder are imported when user enter "test" in the add data menu.
 ```
-//Data\TestDataComma.txt
+//Test file 1: Data\TestDataComma.txt
 Lehmann, Dana, danal@test.com, orange, 5/3/1982
 Harrison, Vanessa, vanessah@test.com, pink, 8/1/1991
 Cordova, Maria, mariac@test.com, violet, 7/22/1978
 
-//Data\TestDataPipe.txt
+//Test file 2: Data\TestDataPipe.txt
 Silver | Robin | robins@test.com | rose | 2/5/1969
 Stewart | Anthony | anthonys@test.com | green | 3/29/1989
 Pierce | Matthew | matthewp@test.com | blue | 11/25/1975
 
-//Data\TestDataSpace.txt
+//Test file 3: Data\TestDataSpace.txt
 Jensen Chris chrisj@test.com blue 7/21/1979
 Russell Meghan meghanr@test.com pink 12/5/1987
 Rankin Mark markr@test.com red 1/15/1982
