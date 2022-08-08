@@ -63,6 +63,8 @@ namespace PersonInfoImportTest
         public void GoodParsingMultipleFiles()
         {
             PersonHelper.ParseFiles(testDataMultipleFiles);
+            Assert.AreEqual("Pipe3", PersonHelper.personList[2].FirstName);
+            Assert.AreEqual("Comma6", PersonHelper.personList[5].FirstName);
             Assert.AreEqual("Space9", PersonHelper.personList[8].FirstName);
             Assert.AreEqual(9, PersonHelper.personList.Count);
         }
@@ -95,28 +97,31 @@ namespace PersonInfoImportTest
             PersonHelper.ParseFiles(testDataMultipleFiles);
             List<Person> list = PersonHelper.GetSortedList(SortedBy.ColorLastNameAsc, out string header);
             Assert.AreEqual("B3", list[0].LastName);
+            Assert.AreEqual("G8", list[8].LastName);
             Assert.AreEqual(9, list.Count);
         }
 
         [TestMethod]
-        [Description("Test getting the test list sorted by favorite color then by birth date, ascending.")]
+        [Description("Test getting the test list sorted by birth date, ascending.")]
         [TestCategory("List By Order")]
         public void ListOrderByBirthDate()
         {
             PersonHelper.ParseFiles(testDataMultipleFiles);
             List<Person> list = PersonHelper.GetSortedList(SortedBy.BirthDateAsc, out string header);
             Assert.AreEqual("E5", list[0].LastName);
+            Assert.AreEqual("F4", list[8].LastName);
             Assert.AreEqual(9, list.Count);
         }
 
         [TestMethod]
-        [Description("Test getting the test list sorted by favorite color then by last name, descending.")]
+        [Description("Test getting the test list sorted by last name, descending.")]
         [TestCategory("List By Order")]
         public void ListOrderByLastName()
         {
             PersonHelper.ParseFiles(testDataMultipleFiles);
             List<Person> list = PersonHelper.GetSortedList(SortedBy.LastNameDsc, out string header);
             Assert.AreEqual("I9", list[0].LastName);
+            Assert.AreEqual("A1", list[8].LastName);
             Assert.AreEqual(9, list.Count);
         }
 
